@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Résultat de la reconnaissance</title>
+</head>
+<body style="background-image:url('static/required/nbg.png');background-repeat: no-repeat;background-size: cover">
+    <div class="container">
+      <center>
+        <h1>Résultat de la reconnaissance</h1>
+
+        <p>{{ result }}</p>
+        <br>
+        <a href="{{ url_for('index') }}" class="return">Retour à l'accueil</a>
+        </center>
+    </div>
+</body>

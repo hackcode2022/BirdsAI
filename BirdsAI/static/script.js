@@ -65,7 +65,7 @@ console.log('loading');
 button.style.display = 'none';
 selecti.style.display = 'none';
 loader.style.display = "block";
-// iframe.style.display = "block";
+iframe.style.display = "block";
 imagePreview.style.display ="none";
 }
 document.addEventListener('DOMContentLoaded', function () {
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(data.result)
             loader.style.display = "none";
             resulttitle.innerHTML = 'Résultat de la reconnaissance : ';
-            resulttext.innerHTML = data.result ;
+            resulttext.innerHTML = "Nom de l'oiseau : " + data.result ;
 
         })
         .catch(error => {

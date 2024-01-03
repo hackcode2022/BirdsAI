@@ -7,7 +7,8 @@ from PIL import Image
 import numpy as np
 
 app = Flask(__name__)
-
+with app.app_context():
+    model = load_model('mon_modele')
 @app.route('/', methods=['GET'])
 def index():
     if request.method == "GET":
@@ -17,7 +18,7 @@ def index():
 @app.route('/handleImage', methods=['POST'])
 def handleImage():
     if request.method == "POST":
-        model = load_model('mon_modele')
+
         data = request.get_json()
         image_data = data.get('image')
         jpeg_base64_data = image_data

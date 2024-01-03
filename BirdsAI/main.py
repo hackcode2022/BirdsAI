@@ -48,7 +48,7 @@ def handleImage():
             return predicted_class_name, scientificName
 
         predicted_class_name, scientificName = display_image_and_prediction(model, img_array)
-        result = {'result': predicted_class_name}
+        result = {'result': predicted_class_name, 'sname':scientificName}
         return jsonify(result)
 
 

@@ -8,6 +8,7 @@ const droptext = document.getElementById('droptext');
 const loader = document.getElementById('loader');
 const resulttitle = document.getElementById('resulttitle');
 const resulttext = document.getElementById('resulttext');
+const sresulttext = document.getElementById('sresulttext');
 const iframe = document.getElementById('iframe');
 window.mobileCheck = function() {
   let check = false;
@@ -91,6 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
             loader.style.display = "none";
             resulttitle.innerHTML = 'Résultat de la reconnaissance : ';
             resulttext.innerHTML = "Nom de l'oiseau : " + data.result ;
+            sresulttext.innerHTML = "Nom scientifique : " + data.sname ;
 
         })
         .catch(error => {
@@ -98,3 +100,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+

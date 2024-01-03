@@ -34,11 +34,12 @@ def handleImage():
         img_array = img_array / 255.0  # Normaliser l'image
 
         dataCsv = pd.read_csv('birds.csv')
+        test_data = np.load('test_data.npy')
 
         def display_image_and_prediction(model, img_array):
             prediction = model.predict(img_array)
             predicted_class = np.argmax(prediction)
-            predicted_class_name = list(dataCsv["labels"])[predicted_class]  # Nom de l'oiseau
+            predicted_class_name = test_data[predicted_class];  # Nom de l'oiseau
             print("Nom de l'oiseau :", predicted_class_name)
 
             scientificName = dataCsv.loc[dataCsv["labels"] == predicted_class_name, "scientific name"].iloc[0]  # Récupération du nom scientifique de cet oiseau
@@ -46,10 +47,9 @@ def handleImage():
             return predicted_class_name, scientificName
 
         predicted_class_name, scientificName = display_image_and_prediction(model, img_array)
-        result = {'result': predicted_class_name} 
+        result = {'result': predicted_class_name}
         return jsonify(result)
 
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=81)
-

@@ -67,7 +67,7 @@ button.style.display = 'none';
 selecti.style.display = 'none';
 loader.style.display = "block";
 // iframe.style.display = "block";
-imagePreview.style.display ="none";
+//imagePreview.style.display ="none";
 }
 document.addEventListener('DOMContentLoaded', function () {
     const imageForm = document.getElementById('imageForm');

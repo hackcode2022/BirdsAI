@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Birds AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</head>
+
+
+
+
+<body style="background-image:url('static/required/nbg.png'); background-repeat: no-repeat; background-size: cover; text-align: justify;background-attachment:fixed;">
+
+
+  <div class="container" style="margin: 1300px auto 0;width:900px;">
+
+    <h1 style="color:black;">Documentation</h1>
+
+    <h2>Chargement du modèle</h2>
+      <p>Cette application de reconnaissance visuelle d'oiseaux utilise 4 principaux langages : HTML, CSS, JavaScript et Python.
+         <br> <br> Chacun joue un rôle bien défini :
+<br>
+          <br>
+HTML :
+Il définit la structure et le contenu textuel des pages web. Le fichier index.html contient tous les éléments qui composent l'interface utilisateur : texte, images, formulaires, etc. Le HTML reste côté client et est interprété par le navigateur web.
+<br>
+CSS :
+Feuilles de style qui définissent la présentation visuelle et la mise en page des pages web. Le CSS est utilisé pour appliquer les couleurs, polices, alignements, etc. afin d'embellir le HTML brut. Le fichier style.css contient tous les styles de l'application. Comme le HTML, le CSS est interprété côté client par le navigateur.
+<br>
+JavaScript :
+Langage de script exécuté côté client pour ajouter une logique métier et du dynamisme aux pages web. Dans notre cas, le fichier script.js gère l'interaction utilisateur, l'envoi des données au serveur, et l'affichage des réponses. Le JavaScript permet de manipuler le DOM (structure HTML) après le chargement initial.
+    <br>
+Python :
+Langage côté serveur qui exécute la logique métier et communique avec la base de données. Ici, le code Python avec Flask se charge de recevoir les images, de faire tourner le modèle d'intelligence artificielle, et de renvoyer les prédictions. Ce traitement coté back-end est totalement invisible de l'utilisateur.
+    </p>
+      <h2>Chargement du modèle</h2>
+    <pre><code class="python">
+with app.app_context():
+    model = load_model('mon_modele')
+    </code></pre>
+
+    <p>Ce code charge le modèle Keras de deep learning qui a été pré-entraîné pour la reconnaissance d'images d'oiseaux. La fonction load_model() charge le modèle sérialisé depuis le fichier mon_modele.
+    Le modèle est chargé au démarrage de l'application Flask grâce au context manager app.app_context(), ce qui permet d'accéder au modèle depuis n'importe quelle route Flask par la suite.</p>
+
+    <h2>Traitement de l'image</h2>
+
+    <pre><code class="python">
+data = request.get_json()
+image_data = data.get('image')
+
+jpeg_bytes = base64.b64decode(image_data)
+image = Image.open(BytesIO(jpeg_bytes))
+
+# Redimensionnement & Normalisation
+
+prediction = model.predict(img_array)
+    </code></pre>
+
+    <p>Quand l'image est soumise par l'utilisateur, elle est envoyée en base64 dans la requête POST. On récupère ces données brutes, puis on les décode depuis le base64 pour obtenir les bytes JPEG de l'image.
+    On ouvre ensuite l'image depuis les bytes avec PIL.Image. L'image est redimensionnée à la taille attendue par le modèle (224x224) et normalisée entre 0-1.</p>
+
+    <p>Finalement, on fait tourner l'inférence sur le modèle avec model.predict() ce qui renvoie un vecteur de prédiction. On prend l'indice de la classe avec le score le plus élevé pour déterminer l'oiseau détecté.</p>
+<h2>Gestion du glisser-déposer</h2>
+
+<pre><code class="js">
+dropArea.addEventListener('dragover', function(e) {
+  e.preventDefault();
+  dropArea.classList.add('dragover');
+});
+
+dropArea.addEventListener('drop', function(e) {
+  const file = e.dataTransfer.files[0];
+  handleFile(file);
+});
+</code></pre>
+
+<p>On ajoute des gestionnaires d'évènements sur la zone de glisser-déposer pour gérer l'interaction de l'utilisateur.
+
+Quand un fichier est glissé au dessus de la zone, l'évènement dragover est déclenché : on empêche le comportement par défaut et on ajoute une classe CSS pour changer l'apparence de la zone et donner un retour visuel à l'utilisateur.</p>
+
+<h2>Style de la zone de glisser-déposer</h2>
+
+<pre><code class="css">
+#drop-area {
+  border: 2px dashed #9D4FA6;
+  padding: 20px;
+  cursor: pointer;
+}
+
+#drop-area.dragover {
+  border-color: #622F6B;
+  background: #EDDDEF;
+}
+</code></pre>
+
+<p>La zone a une bordure en pointillé mauve pour délimiter visuellement la zone active. Le padding et le curseur personnalisé indiquent que c'est une zone interactive.</p>
+
+<p>La classe .dragover changée la couleur de la bordure et du fond quand un fichier est glissé au dessus pour donner un retour visuel à l'utilisateur.</p>
+  </div>
+
+</body>
+
+</html>
+
+
